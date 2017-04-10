@@ -24,43 +24,53 @@ function getAllMovies() {
 <!DOCTYPE html>
 <html>
     <head>
-        <title> ADMIN PAGE </title>
+        <title> ADMIN PANEL </title>
     </head>
     <body>
 
-        <h1> NOT ADMIN </h1>
+        <h1> Admin Panel </h1>
         
         <h3> Welcome <?=$_SESSION['adminName']?> </h3>
-        
-        
-        
-        
+
         <hr>
         
         <form action="addNewMovie.php">
           <input type="submit" value="Add New Movie" />
         </form>
         
-        
-        
-        
         <div style="float:left">
+        <table>
+        <tr>
+            <td>
+                <strong>Movie Title</strong>
+            </td>
+            <td>
+                <strong>Status</strong>
+            </td>
+            <td>
+                <strong>Update</strong>
+            </td>
+        </tr>
         <?php
         
         $movies = getAllMovies();
-        
-        
         foreach($movies as $movie){
-            echo $movie['title'] . " ".  $movie['checkoutStatus'];
-            echo "<a href='userUpdate.php?userId=". $user['userid']. "' >[Update] </a>";
+            echo "<tr>";
+            echo "<td>";
+            echo $movie['title'];
+            echo "</td>";
+            echo "<td>";
+            echo $movie['checkoutStatus'];
+            echo "</td>";
+            echo "<td>";
+            echo "<a href='movieUpdate.php?id=". $movie['id']. "' >[Update]</a>";
+            echo "</td>";
+            echo "</tr>";
         }
         
         ?>
-       
-        </div>
+        </table>
         
-        <div style="float:right">
-        <iframe src ="" width="400" height="400"name = "userInfoFrame"></iframe>
         </div>
     </body>
 </html>

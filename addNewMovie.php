@@ -48,9 +48,6 @@ function addMovie(){
     $stmt -> execute($movieArray);
 }
 
-
-
-
 ?>
 
 

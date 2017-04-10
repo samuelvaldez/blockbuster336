@@ -44,7 +44,7 @@ function getAllMovies() {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Blockbuster</a>
+                <a class="navbar-brand" href="mainPage.php">Blockbuster</a>
             </div>
             
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -73,10 +73,43 @@ function getAllMovies() {
 
     <!-- Page Content -->
     <div class="container">
+
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1>Welcome to Blockbuster!</h1>
-                <h5>Buisness is fine, everything is fine!  Also, what is that Netflix thing?</h5>
+                <h1>Check out our newest movies!</h1>
+                <div>
+                    <table class='table'>
+                    <tr>
+                        <td>
+                            <strong>Movie Title</strong>
+                        </td>
+                        <td>
+                            <strong>Status</strong>
+                        </td>
+                        <td>
+                            <strong></strong>
+                        </td>
+                    </tr>
+                    <?php
+                    
+                    $movies = getAllMovies();
+                    foreach($movies as $movie){
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "<a href='movieInfo.php?id=" . $movie['id'] . "' >" . $movie['title'] . "</a>";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $movie['checkoutStatus'];
+                        echo "</td>";
+                        echo "<td>";
+                        echo "<a href='shoppingCart.php?id=" . $movie['title'] . "' >Add to cart</a>";
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                    
+                    ?>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
