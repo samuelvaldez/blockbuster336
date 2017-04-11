@@ -2,6 +2,13 @@
 
 session_start();  //start or resume an existing session
 
+/*  May be neded
+if ($_SESSION['cartItems'] == null) {
+    $_SESSION['cartItems'] = array();
+    echo "Testing!";
+}
+*/
+
 include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 
@@ -102,7 +109,7 @@ function getAllMovies() {
                         echo $movie['checkoutStatus'];
                         echo "</td>";
                         echo "<td>";
-                        echo "<a href='shoppingCart.php?id=" . $movie['title'] . "' >Add to cart</a>";
+                        echo "<a href='shoppingCart.php?id=" . $movie['id'] . "' >Add to cart</a>";
                         echo "</td>";
                         echo "</tr>";
                     }

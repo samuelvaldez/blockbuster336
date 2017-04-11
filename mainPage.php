@@ -2,18 +2,15 @@
 
 session_start();  //start or resume an existing session
 
+/*  May be neded
+if ($_SESSION['cartItems'] == null) {
+    $_SESSION['cartItems'] = array();
+    echo "Testing!";
+}
+*/
+
 include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
-
-function getAllMovies() {
-    global $dbConn;
-    $sql = "SELECT * FROM movies ORDER BY title";
-    $statement = $dbConn->prepare($sql);
-    $statement->execute();
-    $records = $statement->fetchAll(PDO::FETCH_ASSOC);
-    
-    return $records;
-}
 
 ?>
 

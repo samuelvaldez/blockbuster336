@@ -78,6 +78,7 @@ function getMovie($id) {
             <div class="col-lg-8">
                 <?php
                 $movie = getMovie($_GET['id']);
+                echo "<h1>" . $movie['title'] . "</h1>";
                 
                 echo "<table class='table'>";
                 foreach($movie as $atrib => $val) {

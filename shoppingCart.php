@@ -2,17 +2,24 @@
 
 session_start();  //start or resume an existing session
 
+if ($_SESSION['cartItems'] == null) {
+    $_SESSION['cartItems'] = array();
+}
+
 include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 
-function getAllMovies() {
+if(isset($_GET['id'])) {
     global $dbConn;
-    $sql = "SELECT * FROM movies ORDER BY title";
+    $sql = "SELECT * FROM movies WHERE id = " . $_GET['id'];
     $statement = $dbConn->prepare($sql);
     $statement->execute();
-    $records = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $record = $statement->fetch(PDO::FETCH_ASSOC);
     
-    return $records;
+    // Not working
+    if (!in_array($record, $_SESSION)) {
+        array_push ($_SESSION['cartItems'], $record);    
+    }    
 }
 
 ?>
@@ -78,7 +85,12 @@ function getAllMovies() {
             <div class="col-lg-12 text-center">
                 <h1>Shopping Cart</h1>
                 <div>
-                    
+                    <?php
+                        foreach($_SESSION['cartItems'] as $movie) {
+                            print_r($movie);
+                            echo "<br />";
+                        }
+                    ?>
                 </div>
             </div>
         </div>
