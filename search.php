@@ -24,6 +24,25 @@ function getContent(){
     return $records;
 }
 
+// Adds the movie to the cart
+if (isset($_GET['addToCart'])){
+    addCartItem($_GET['itemToCart']);
+    header("Location: shoppingCart.php");
+}
+
+function addCartItem($id) {
+    global $dbConn;
+    $sql = "SELECT * FROM movies WHERE id = " . $id;
+    $statement = $dbConn->prepare($sql);
+    $statement->execute();
+    $record = $statement->fetch(PDO::FETCH_ASSOC);
+    
+    // Not working
+    if (!in_array($record, $_SESSION)) {
+        array_push ($_SESSION['cartItems'], $record);    
+    }    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -115,16 +134,16 @@ function getContent(){
                         echo "    </td>";
                         echo "</tr>";
                         
-                        foreach($content as $c){
+                        foreach($content as $item){
                             echo "<tr>";
                             echo "<td>";
-                            echo "<a href='movieInfo.php?id=" . $c['id'] . "' >" . $c['title'] . "</a>";
+                            echo "<a href='movieInfo.php?id=" . $item['id'] . "' >" . $item['title'] . "</a>";
                             echo "</td>";
                             echo "<td>";
-                            echo $c['checkoutStatus'];
+                            echo $item['checkoutStatus'];
                             echo "</td>";
                             echo "<td>";
-                            echo "<a href='shoppingCart.php?id=" . $c['title'] . "' >Add to cart</a>";
+                            echo "<a href='?addToCart&itemToCart=" . $item['id'] . "' >Add to cart</a>";
                             echo "</td>";
                             echo "</tr>";
                         }

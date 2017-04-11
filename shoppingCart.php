@@ -22,6 +22,10 @@ if(isset($_GET['id'])) {
     }    
 }
 
+if (isset($_GET['removeItem'])) {
+    unset($_SESSION['cartItems'][$_GET['key']]);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -85,12 +89,34 @@ if(isset($_GET['id'])) {
             <div class="col-lg-12 text-center">
                 <h1>Shopping Cart</h1>
                 <div>
-                    <?php
-                        foreach($_SESSION['cartItems'] as $movie) {
-                            print_r($movie);
-                            echo "<br />";
-                        }
+                   <?php
+                    echo "<table class='table'>";
+                    echo "<tr>";
+                    echo "<td><strong>Title</strong></td>";
+                    echo "<td><strong>Rental Cost</strong></td>";
+                    echo "<td></td>";
+                    echo "</tr>";
+                    
+                    $cartTotal = 0;
+                    foreach($_SESSION['cartItems'] as $key => $item) {
+                        $cartTotal += $item['rentalCost'];
+                        
+                        echo "<tr>";
+                        echo "<td>" . $item['title'] . "</td>";
+                        echo "<td>" . $item['rentalCost'] . "</td>";
+                        echo "<td><a href='?removeItem&key=" . $key . "'>Remove from cart</a>";
+                        echo "</tr>";
+                    }
+                    
+                    echo "<tr>";
+                    echo "<td></td>";
+                    echo "<td>" . $cartTotal . "</td>";
+                    echo "<td></td>";
+                    echo "</tr>";
+                    echo "</table>";
+                    
                     ?>
+                    
                 </div>
             </div>
         </div>
