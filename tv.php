@@ -2,6 +2,13 @@
 
 session_start();  //start or resume an existing session
 
+/*  May be neded
+if ($_SESSION['cartItems'] == null) {
+    $_SESSION['cartItems'] = array();
+    echo "Testing!";
+}
+*/
+
 include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 

@@ -2,17 +2,28 @@
 
 session_start();  //start or resume an existing session
 
+if ($_SESSION['cartItems'] == null) {
+    $_SESSION['cartItems'] = array();
+}
+
 include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 
-function getAllMovies() {
+if(isset($_GET['id'])) {
     global $dbConn;
-    $sql = "SELECT * FROM movies ORDER BY title";
+    $sql = "SELECT * FROM movies WHERE id = " . $_GET['id'];
     $statement = $dbConn->prepare($sql);
     $statement->execute();
-    $records = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $record = $statement->fetch(PDO::FETCH_ASSOC);
     
-    return $records;
+    // Not working
+    if (!in_array($record, $_SESSION)) {
+        array_push ($_SESSION['cartItems'], $record);    
+    }    
+}
+
+if (isset($_GET['removeItem'])) {
+    unset($_SESSION['cartItems'][$_GET['key']]);
 }
 
 ?>
@@ -78,6 +89,33 @@ function getAllMovies() {
             <div class="col-lg-12 text-center">
                 <h1>Shopping Cart</h1>
                 <div>
+                   <?php
+                    echo "<table class='table'>";
+                    echo "<tr>";
+                    echo "<td><strong>Title</strong></td>";
+                    echo "<td><strong>Rental Cost</strong></td>";
+                    echo "<td></td>";
+                    echo "</tr>";
+                    
+                    $cartTotal = 0;
+                    foreach($_SESSION['cartItems'] as $key => $item) {
+                        $cartTotal += $item['rentalCost'];
+                        
+                        echo "<tr>";
+                        echo "<td>" . $item['title'] . "</td>";
+                        echo "<td>" . $item['rentalCost'] . "</td>";
+                        echo "<td><a href='?removeItem&key=" . $key . "'>Remove from cart</a>";
+                        echo "</tr>";
+                    }
+                    
+                    echo "<tr>";
+                    echo "<td></td>";
+                    echo "<td>" . $cartTotal . "</td>";
+                    echo "<td></td>";
+                    echo "</tr>";
+                    echo "</table>";
+                    
+                    ?>
                     
                 </div>
             </div>
