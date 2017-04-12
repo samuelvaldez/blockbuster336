@@ -5,12 +5,12 @@ session_start();  //start or resume an existing session
 include '../../Inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 
-function getAllShows() {
+function getShows($id) {
     global $dbConn;
-    $sql = "SELECT * FROM shows ORDER BY title";
+    $sql = "SELECT * FROM shows WHERE id = " . $id;
     $statement = $dbConn->prepare($sql);
     $statement->execute();
-    $records = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $records = $statement->fetch(PDO::FETCH_ASSOC);
     
     return $records;
 }
@@ -73,39 +73,22 @@ function getAllShows() {
 
     <!-- Page Content -->
     <div class="container">
-
         <div class="row">
-            <div class="col-lg-12 text-center">
-                <h1>All Television Displayed Here</h1>
-                    <table class='table'>
-                    <tr>
-                        <td>
-                            <strong>Show Title</strong>
-                        </td>
-                        <td>
-                            <strong>Status</strong>
-                        </td>
-                        <td>
-                            <strong></strong>
-                        </td>
-                    </tr>
-                    <?php
-                        $shows = getAllShows();
-                        foreach ($shows as $show) {
-                            echo "<tr>";
-                                echo "<td>";
-                                    echo "<a href='tvInfo.php?id=" . $show['id'] . "' >" . $show['title'] . "</a>";
-                                echo "</td>";
-                                echo "<td>";
-                                    echo $show['checkoutStatus'];
-                                echo "</td>";
-                                echo "<td>";
-                                    echo "<a href='shoppingCart.php?id=" . $movie['title'] . "' >Add to cart</a>";
-                                echo "</td>";
-                            echo "</tr>";
-                        }
-                    ?>
-                    </table>
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <?php
+                $show = getShows($_GET['id']);
+                
+                echo "<table class='table'>";
+                foreach($show as $atrib => $val) {
+                    echo "<tr>";
+                    echo "<td>" . $atrib . "</td>";
+                    echo "<td>" . $val . "</td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+                
+                ?>
             </div>
         </div>
     </div>
