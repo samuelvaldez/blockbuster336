@@ -2,21 +2,31 @@
 
 session_start();  //start or resume an existing session
 
-/*  May be neded
-if ($_SESSION['cartItems'] == null) {
-    $_SESSION['cartItems'] = array();
-    echo "Testing!";
-}
-*/
-
 include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 
 function getContent(){
     global $dbConn;
-    $sql = "select * from movies where title like :title";
+    
+    // Named paramter array
     $nameOfarray = array();
-    $nameOfarray[':title']= "%" . $_GET['title'] . "%";
+    
+    $sql = "select * from " . $_GET['type'] . " where title like :title";
+    
+    // Check if year is filled in
+    if (!empty($_GET['year'])) {
+        echo "Testing!";
+        $nameOfarray[':year'] = $_GET['year'];
+        $sql .= " and year = :year";
+    }
+    
+    // Check if year is filled in
+    if (!empty($_GET['genre'])) {
+        $nameOfarray[':genre'] = $_GET['genre'];
+        $sql .= " and genre = :genre";
+    }
+    
+    $nameOfarray[':title'] = "%" . $_GET['title'] . "%";
     $statement = $dbConn->prepare($sql);
     $statement->execute($nameOfarray);
     $records = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -72,7 +82,7 @@ function addCartItem($id) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Blockbuster</a>
+                <a class="navbar-brand" href="mainPage.php">Blockbuster</a>
             </div>
             
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -105,12 +115,26 @@ function addCartItem($id) {
             <div class="col-lg-2 text-center"></div>
             <div class="col-lg-8 text-center">
                 <h1>Search</h1>
-                <h4>Only searches movies atm!</h4>
                 <form>
                     <div class="form-group">
-                        <label for="title">Title</label>
+                        <label for="title" >Title</label>
                         <input type="text" name="title" class="form-control" id="title" placeholder="Title">
                     </div>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="text" name="year" class="form-control" id="year" placeholder="Year">
+                    </div>
+                    <div class="form-group">
+                        <label for="genre">Genre</label>
+                        <input type="text" name="genre" class="form-control" id="genre" placeholder="Genre">
+                    </div>
+                    
+                    
+                    <label class="radio-inline"><input type="radio" name="type" value="movies" checked>Movies</label>
+                    <label class="radio-inline"><input type="radio" name="type" value="videoGames">Video Games</label>
+                    <label class="radio-inline"><input type="radio" name="type" value="television">Television</label>
+                    
+                    <br /><br />
                     <button type="submit" name="Submit" class="btn btn-default">Submit</button>
                 </form>
                 <br />

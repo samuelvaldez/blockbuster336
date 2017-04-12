@@ -2,26 +2,16 @@
 
 session_start();  //start or resume an existing session
 
+// Ensures the cart session variable has been created
 if ($_SESSION['cartItems'] == null) {
     $_SESSION['cartItems'] = array();
 }
 
+// Gets a database connection
 include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 
-if(isset($_GET['id'])) {
-    global $dbConn;
-    $sql = "SELECT * FROM movies WHERE id = " . $_GET['id'];
-    $statement = $dbConn->prepare($sql);
-    $statement->execute();
-    $record = $statement->fetch(PDO::FETCH_ASSOC);
-    
-    // Not working
-    if (!in_array($record, $_SESSION)) {
-        array_push ($_SESSION['cartItems'], $record);    
-    }    
-}
-
+// Handles when an object is clicked for removal from cart
 if (isset($_GET['removeItem'])) {
     unset($_SESSION['cartItems'][$_GET['key']]);
 }
