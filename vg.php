@@ -12,15 +12,35 @@ if ($_SESSION['cartItems'] == null) {
 include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 
-function getAllMovies() {
+function getAllVideoGames() {
     global $dbConn;
-    $sql = "SELECT * FROM movies ORDER BY title";
+    $sql = "SELECT * FROM videoGames ORDER BY title";
     $statement = $dbConn->prepare($sql);
     $statement->execute();
     $records = $statement->fetchAll(PDO::FETCH_ASSOC);
     
     return $records;
 }
+
+// Adds the movie to the cart
+if (isset($_GET['addToCart'])){
+    addCartItem($_GET['itemToCart']);
+    header("Location: shoppingCart.php");
+}
+
+function addCartItem($id) {
+    global $dbConn;
+    $sql = "SELECT * FROM movies WHERE id = " . $id;
+    $statement = $dbConn->prepare($sql);
+    $statement->execute();
+    $record = $statement->fetch(PDO::FETCH_ASSOC);
+    
+    // Not working
+    if (!in_array($record, $_SESSION)) {
+        array_push ($_SESSION['cartItems'], $record);    
+    }    
+}
+
 
 ?>
 
@@ -83,7 +103,43 @@ function getAllMovies() {
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1>All Video Games Displayed Here</h1>
+                <h1>Check out our newest movies!</h1>
+                <div>
+                    <table class='table'>
+                    <tr>
+                        <td>
+                            <strong>Movie Title</strong>
+                        </td>
+                        <td>
+                            <strong>Status</strong>
+                        </td>
+                        <td>
+                            <strong>Price</strong>
+                        </td>
+                    </tr>
+                    <?php
+                    
+                    $videoGames = getAllVideoGames();
+                    foreach($videoGames as $games){
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "<a href='vgInfo.php?id=" . $games['id'] . "' >" . $games['title'] . "</a>";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $games['checkoutStatus'];
+                        echo "</td>";
+                        echo "<td>";
+                        echo $games['price'];
+                        echo "</td>";
+                        echo "<td>";
+                        echo "<a href='?addToCart&itemToCart=" . $games['id'] . "' >Add to cart</a>";
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                    
+                    ?>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
