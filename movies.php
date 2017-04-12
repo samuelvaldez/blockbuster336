@@ -114,7 +114,7 @@ function addCartItem($id) {
                             <strong>Status</strong>
                         </td>
                         <td>
-                            <strong></strong>
+                            <strong>Rental Price</strong>
                         </td>
                     </tr>
                     <?php
@@ -127,6 +127,9 @@ function addCartItem($id) {
                         echo "</td>";
                         echo "<td>";
                         echo $movie['checkoutStatus'];
+                        echo "</td>";
+                        echo "<td>";
+                        echo $movie['rentalCost'];
                         echo "</td>";
                         echo "<td>";
                         echo "<a href='?addToCart&itemToCart=" . $movie['id'] . "' >Add to cart</a>";

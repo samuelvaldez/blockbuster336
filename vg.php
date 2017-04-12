@@ -103,18 +103,18 @@ function addCartItem($id) {
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h1>Check out our newest movies!</h1>
+                <h1>All Our Top Rated Video Games!!</h1>
                 <div>
                     <table class='table'>
                     <tr>
                         <td>
-                            <strong>Movie Title</strong>
+                            <strong>Video Games Title</strong>
                         </td>
                         <td>
                             <strong>Status</strong>
                         </td>
                         <td>
-                            <strong>Price</strong>
+                            <strong>Rental Price</strong>
                         </td>
                     </tr>
                     <?php

@@ -86,7 +86,7 @@ function getAllShows() {
                             <strong>Status</strong>
                         </td>
                         <td>
-                            <strong></strong>
+                            <strong>Rental Price</strong>
                         </td>
                     </tr>
                     <?php
@@ -98,6 +98,9 @@ function getAllShows() {
                                 echo "</td>";
                                 echo "<td>";
                                     echo $show['checkoutStatus'];
+                                echo "</td>";
+                                echo "<td>";
+                                echo $show['rentalCost'];
                                 echo "</td>";
                                 echo "<td>";
                                     echo "<a href='shoppingCart.php?id=" . $movie['title'] . "' >Add to cart</a>";
