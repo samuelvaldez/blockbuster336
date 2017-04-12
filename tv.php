@@ -2,7 +2,7 @@
 
 session_start();  //start or resume an existing session
 
-include '../../Inc/dbConnection.php';
+include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 
 function getAllShows() {

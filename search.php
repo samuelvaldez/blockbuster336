@@ -20,7 +20,7 @@ function getContent(){
         $sql .= " and year = :year";
     }
     
-    // Check if year is filled in
+    // Check if genre is filled in
     if (!empty($_GET['genre'])) {
         $nameOfarray[':genre'] = $_GET['genre'];
         $sql .= " and genre = :genre";
@@ -42,7 +42,13 @@ if (isset($_GET['addToCart'])){
 
 function addCartItem($id) {
     global $dbConn;
-    $sql = "SELECT * FROM movies WHERE id = " . $id;
+    if ($_GET['type'] == 'movies') {
+        $sql = "SELECT * FROM movies WHERE id = " . $id;    
+    } else if ($_GET['type'] == 'videoGames') {
+        $sql = "SELECT * FROM videoGames WHERE id = " . $id;    
+    } else {
+        $sql = "SELECT * FROM shows WHERE id = " . $id;    
+    }
     $statement = $dbConn->prepare($sql);
     $statement->execute();
     $record = $statement->fetch(PDO::FETCH_ASSOC);
@@ -132,7 +138,7 @@ function addCartItem($id) {
                     
                     <label class="radio-inline"><input type="radio" name="type" value="movies" checked>Movies</label>
                     <label class="radio-inline"><input type="radio" name="type" value="videoGames">Video Games</label>
-                    <label class="radio-inline"><input type="radio" name="type" value="television">Television</label>
+                    <label class="radio-inline"><input type="radio" name="type" value="shows">Television</label>
                     
                     <br /><br />
                     <button type="submit" name="Submit" class="btn btn-default">Submit</button>
@@ -161,7 +167,13 @@ function addCartItem($id) {
                         foreach($content as $item){
                             echo "<tr>";
                             echo "<td>";
-                            echo "<a href='movieInfo.php?id=" . $item['id'] . "' >" . $item['title'] . "</a>";
+                            if ($_GET['type'] == 'movies') {
+                                echo "<a href='movieInfo.php?id=" . $item['id'] . "' >" . $item['title'] . "</a>";    
+                            } else if ($_GET['type'] == 'videoGames') {
+                                echo "<a href='vgInfo.php?id=" . $item['id'] . "' >" . $item['title'] . "</a>";
+                            } else {
+                                echo "<a href='tvInfo.php?id=" . $item['id'] . "' >" . $item['title'] . "</a>";
+                            }
                             echo "</td>";
                             echo "<td>";
                             echo $item['checkoutStatus'];
