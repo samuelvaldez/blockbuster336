@@ -179,7 +179,7 @@ function addCartItem($id) {
                             echo $item['checkoutStatus'];
                             echo "</td>";
                             echo "<td>";
-                            echo "<a href='?addToCart&itemToCart=" . $item['id'] . "' >Add to cart</a>";
+                            echo "<a href='?addToCart&itemToCart=" . $item['id'] . "&type=" . $_GET['type'] . "' >Add to cart</a>";
                             echo "</td>";
                             echo "</tr>";
                         }

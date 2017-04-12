@@ -30,7 +30,7 @@ if (isset($_GET['addToCart'])){
 
 function addCartItem($id) {
     global $dbConn;
-    $sql = "SELECT * FROM movies WHERE id = " . $id;
+    $sql = "SELECT * FROM videoGames WHERE id = " . $id;
     $statement = $dbConn->prepare($sql);
     $statement->execute();
     $record = $statement->fetch(PDO::FETCH_ASSOC);

@@ -2,7 +2,7 @@
 
 session_start();  //start or resume an existing session
 
-include '../../Inc/dbConnection.php';
+include '../inc/dbConnection.php';
 $dbConn = getDBConnection("blockbuster");
 
 function getShows($id) {
@@ -78,6 +78,7 @@ function getShows($id) {
             <div class="col-lg-8">
                 <?php
                 $show = getShows($_GET['id']);
+                echo "<h1>" . $show['title'] . "</h1>";
                 
                 echo "<table class='table'>";
                 foreach($show as $atrib => $val) {

@@ -15,6 +15,26 @@ function getAllShows() {
     return $records;
 }
 
+
+// Adds the movie to the cart
+if (isset($_GET['addToCart'])){
+    addCartItem($_GET['itemToCart']);
+    header("Location: shoppingCart.php");
+}
+
+function addCartItem($id) {
+    global $dbConn;
+    $sql = "SELECT * FROM shows WHERE id = " . $id;
+    $statement = $dbConn->prepare($sql);
+    $statement->execute();
+    $record = $statement->fetch(PDO::FETCH_ASSOC);
+    
+    // Not working
+    if (!in_array($record, $_SESSION)) {
+        array_push ($_SESSION['cartItems'], $record);    
+    }    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -103,7 +123,7 @@ function getAllShows() {
                                 echo $show['rentalCost'];
                                 echo "</td>";
                                 echo "<td>";
-                                    echo "<a href='shoppingCart.php?id=" . $movie['title'] . "' >Add to cart</a>";
+                                    echo "<a href='?addToCart&itemToCart=" . $show['id'] . "' >Add to cart</a>";
                                 echo "</td>";
                             echo "</tr>";
                         }
