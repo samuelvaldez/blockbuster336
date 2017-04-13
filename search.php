@@ -178,7 +178,7 @@ function addCartItem($id) {
                         echo "        <strong>Status</strong>";
                         echo "    </td>";
                         echo "    <td>";
-                        echo "        <strong></strong>";
+                        echo "        <strong>Rental Price</strong>";
                         echo "    </td>";
                         echo "</tr>";
                         
@@ -195,6 +195,9 @@ function addCartItem($id) {
                             echo "</td>";
                             echo "<td>";
                             echo $item['checkoutStatus'];
+                            echo "</td>";
+                            echo "<td>";
+                            echo $item['rentalCost'];
                             echo "</td>";
                             echo "<td>";
                             echo "<a href='?addToCart&itemToCart=" . $item['id'] . "&type=" . $_GET['type'] . "' >Add to cart</a>";
