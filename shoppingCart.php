@@ -100,7 +100,7 @@ if (isset($_GET['removeItem'])) {
                     
                     echo "<tr>";
                     echo "<td></td>";
-                    echo "<td>" . $cartTotal . "</td>";
+                    echo "<td> Total: " . $cartTotal . "</td>";
                     echo "<td></td>";
                     echo "</tr>";
                     echo "</table>";

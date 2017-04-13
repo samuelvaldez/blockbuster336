@@ -26,6 +26,16 @@ function getContent(){
         $sql .= " and genre = :genre";
     }
     
+    
+    if($_GET['order'] == 'a'){
+       
+        $sql .= " ORDER BY title ASC";
+    
+    }else{
+        $sql .= " ORDER BY title DESC";
+    }
+
+    
     $nameOfarray[':title'] = "%" . $_GET['title'] . "%";
     $statement = $dbConn->prepare($sql);
     $statement->execute($nameOfarray);
@@ -38,7 +48,9 @@ function getContent(){
 if (isset($_GET['addToCart'])){
     addCartItem($_GET['itemToCart']);
     header("Location: shoppingCart.php");
+    
 }
+
 
 function addCartItem($id) {
     global $dbConn;
@@ -139,6 +151,12 @@ function addCartItem($id) {
                     <label class="radio-inline"><input type="radio" name="type" value="movies" checked>Movies</label>
                     <label class="radio-inline"><input type="radio" name="type" value="videoGames">Video Games</label>
                     <label class="radio-inline"><input type="radio" name="type" value="shows">Television</label>
+
+                    <select name = "order">
+                    <option value="a">A-Z</option>
+                    <option value="z">Z-A</option>
+                    
+                    </select>
                     
                     <br /><br />
                     <button type="submit" name="Submit" class="btn btn-default">Submit</button>
