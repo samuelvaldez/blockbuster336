@@ -15,7 +15,7 @@ function getContent(){
     
     // Check if year is filled in
     if (!empty($_GET['year'])) {
-        echo "Testing!";
+        
         $nameOfarray[':year'] = $_GET['year'];
         $sql .= " and year = :year";
     }
@@ -152,7 +152,7 @@ function addCartItem($id) {
                     <label class="radio-inline"><input type="radio" name="type" value="videoGames">Video Games</label>
                     <label class="radio-inline"><input type="radio" name="type" value="shows">Television</label>
 
-                    <select name = "order">
+                    &nbsp &nbsp<select name = "order"> 
                     <option value="a">A-Z</option>
                     <option value="z">Z-A</option>
                     

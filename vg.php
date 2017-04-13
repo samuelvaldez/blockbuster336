@@ -129,7 +129,7 @@ function addCartItem($id) {
                         echo $games['checkoutStatus'];
                         echo "</td>";
                         echo "<td>";
-                        echo $games['price'];
+                        echo $games['rentalCost'];
                         echo "</td>";
                         echo "<td>";
                         echo "<a href='?addToCart&itemToCart=" . $games['id'] . "' >Add to cart</a>";
